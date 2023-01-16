@@ -11,7 +11,7 @@ describe("Test Schema", function(){
     let productTwo = "Test Product Two"
     let product
     before(async function(){
-        conn = mongoose.connect(`mongodb+srv://IchingSamuel:${encodeURIComponent("OJ0mIrCE4hpUS0b5")}@cluster0.ijhjj.gcp.mongodb.net/?retryWrites=true'`, {useNewUrlParser: true, useFindAndModify: false})
+        conn = mongoose.connect(`mongodb://localhost:27017/mydb/?retryWrites=true'`, {useNewUrlParser: true, useFindAndModify: false})
         conn.then(conn => console.log(`MongoDb connected: ${conn.connection.host}`)).catch(err => {console.error(err); process.exit(1);})
         const ProductSchema = new mongoose.Schema({
             name: {
