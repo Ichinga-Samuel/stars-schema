@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-
+export const tes = 6
 function isPlainObject(o) {
     return Object(o) === o && Object.getPrototypeOf(o) === Object.prototype;
 }

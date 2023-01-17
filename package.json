@@ -1,19 +1,38 @@
 {
   "name": "stars-schema",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A mongoose schema plugin for implementing a stars rating system",
   "type": "module",
   "scripts": {
-    "test": "mocha"
+    "compile": "npm run lint && rm -rf dist/lib && tsc && tsc --build tsconfig.es5.json && npm run readme",
+    "lint": "eslint . --ext .ts",
+    "readme": "node bin/generateReadme.js",
+    "test": "mocha src/test*.js"
   },
-  "keywords": ["mongoose", "mongodb", "stars", "ratings", "schema", "plugins"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ichinga-Samuel/stars-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ichinga-Samuel/stars-schema/issues"
+  },
+  "homepage": "https://github.com/Ichinga-Samuel/stars-schema#readme",
+  "keywords": [
+    "mongoose",
+    "mongodb",
+    "stars",
+    "rating",
+    "schema",
+    "plugins"
+  ],
   "author": "Ichinga Samuel",
   "license": "MIT",
   "dependencies": {
     "mongoose": "^5.13.5"
   },
   "devDependencies": {
-    "mocha": "^10.2.0"
+    "coveralls": "^3.1.1",
+    "mocha": "^10.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "typescript": "^4.9.4"
   }
 }

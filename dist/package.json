@@ -1,0 +1,21 @@
+{
+  "name": "stars-schema",
+  "version": "1.0.0",
+  "description": "A mongoose schema plugin for implementing a stars rating system",
+  "main": "lib/es5/index.js",
+  "module": "lib/es6/index.js",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["lib", "CHANGELOG.md", "LICENSE", "package.json", "README.md"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ichinga-Samuel/stars-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ichinga-Samuel/stars-schema/issues"
+  },
+  "homepage": "https://github.com/Ichinga-Samuel/stars-schema#readme",
+  "keywords": ["mongoose", "mongodb", "stars", "rating", "schema", "plugins"],
+  "author": "Ichinga Samuel",
+  "license": "MIT"
+}
