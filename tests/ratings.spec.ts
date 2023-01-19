@@ -13,8 +13,10 @@ describe("Test Schema", function(){
     let productTwo = "Test Product Two"
     let product: Model<Document>
     before(async function(){
+        console.error(process.env.MONGODB_URI)
+        console.log(process.env.MONGODB_URI, 'log')
         conn = connect(`${process.env.MONGODB_URI}`, {useNewUrlParser: true, useFindAndModify: false})
-        conn.then(conn => console.log(`MongoDb connected: ${conn.connection.host}`)).catch(err => {console.error(err); process.exit(1);})
+        conn.then(conn => console.log(`MongoDb connected: ${conn.connection.host}`)).catch(err => {console.error(err, process.env.MONGODB_URI, 'err'); process.exit(1);})
         const ProductSchema = new Schema({
             name: {
                 type: String,
