@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
-        env:
-          MONGODB_URI: ${{secrets.MONGODB_URI}}
+      env:
+        MONGODB_URI: ${{secrets.MONGODB_URI}}
       - run: npm ci
       - run: npm test
