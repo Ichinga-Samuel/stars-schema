@@ -1,5 +1,6 @@
 {
   "name": "stars-schema",
+  "version": "1.0.0",
   "description": "A mongoose schema plugin for implementing a stars rating system",
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
