@@ -14,7 +14,7 @@ describe("Test Schema", function(){
     let product: Model<Document>
 
     before(async function(){
-        conn = connect(`mongodb+srv://IchingSamuel:${encodeURIComponent("OJ0mIrCE4hpUS0b5")}@cluster0.ijhjj.gcp.mongodb.net/?retryWrites=true`, {useNewUrlParser: true, useFindAndModify: false})
+        conn = connect(`${process.env}`, {useNewUrlParser: true, useFindAndModify: false})
         conn.then(conn => console.log(`MongoDb connected: ${conn.connection.host}`)).catch(err => {console.error(err); process.exit(1);})
         const ProductSchema = new Schema({
             name: {
