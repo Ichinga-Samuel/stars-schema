@@ -1,4 +1,4 @@
-import assert = require("assert");
+import * as assert from 'assert';
 
 import 'mocha'
 import {connect, Schema, model, Document, Mongoose, Model} from 'mongoose'
@@ -13,9 +13,7 @@ describe("Test Schema", function(){
     let productTwo = "Test Product Two"
     let product: Model<Document>
     before(async function(){
-        console.error(process.env.MONGODB_URI)
-        console.log(process.env.MONGODB_URI, 'log')
-        conn = connect(`${process.env.MONGODB_URI}`, {useNewUrlParser: true, useFindAndModify: false})
+        conn = connect(`mongodb+srv://IchingSamuel:${encodeURIComponent("OJ0mIrCE4hpUS0b5")}@cluster0.ijhjj.gcp.mongodb.net/?retryWrites=true`, {useNewUrlParser: true, useFindAndModify: false})
         conn.then(conn => console.log(`MongoDb connected: ${conn.connection.host}`)).catch(err => {console.error(err); process.exit(1);})
         const ProductSchema = new Schema({
             name: {
