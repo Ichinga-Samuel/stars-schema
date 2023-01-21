@@ -2,8 +2,8 @@
   "name": "stars-schema",
   "version": "1.0.0",
   "description": "A mongoose schema plugin for implementing a stars rating system",
-  "types": "./dist/cjs/types/index.d.ts",
-  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/ratings.d.ts",
+  "main": "./dist/cjs/ratings.js",
   "private": false,
   "author": "Ichinga Samuel",
   "license": "MIT",
@@ -13,23 +13,29 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/types/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "types": "./dist/esm/ratings.d.ts",
+        "default": "./dist/esm/ratings.js"
       },
       "require": {
-        "types": "./dist/cjs/types/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "types": "./dist/cjs/ratings.d.ts",
+        "default": "./dist/cjs/ratings.js"
       }
     }
   },
+
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run fixup",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "fixup": "fixup.sh",
+    "clean": "rm -rf ./dist && mkdir dist",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "cp -r esm dist/",
+    "build:cjs": "cp -r cjs dist/",
     "prepack": "npm run build",
     "test": "mocha"
+  },
+  "release": {
+    "branches": ["master"]
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",

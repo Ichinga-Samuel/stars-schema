@@ -1,0 +1,1 @@
+export { ratings, Config, Stars } from './ratings';
