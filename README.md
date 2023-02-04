@@ -47,9 +47,9 @@ await product.findOneAndUpdate({name: "Product One"}, {stars: {1: 1, 2:1, 3:1, 4
 // use the increment operator
 await product.findOneAndUpdate({name: "Product One"}, {$inc:{['stars.5']: 1}})
 ```
-#### config options
-- name: string: A name for the path; defaults to *ratings*
-- levels: Array: An array representing the star system in use; defaults to *[1, 2, 3, 4, 5]*
+#### Config Options
+- name: string: A name for the path; defaults to *ratings*.
+- levels: Array: An array representing the star system in use; defaults to *[1, 2, 3, 4, 5]*.
 - getter: Function: A getter function if you don't want to use weighted average.
 - setter: Function: A setter function if you don't need the default.
 - validate: boolean: To validate or not; default is true.
