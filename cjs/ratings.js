@@ -18,15 +18,6 @@ function weightedAverage(ratings) {
 }
 
 
-function setter(ratings){
-    if (isPlainObject(ratings)){return ratings}
-    if(typeof ratings === "number" && this instanceof mongoose.Document){
-        this.get(name, null, {getters: false})[ratings] = 1 + parseInt(this.get(name, null, {getters: false})[ratings])
-        return this.get(name, null, {getters: false})
-    }
-}
-
-
 function ratings(schema, options) {
     let config = { levels: [1, 2, 3, 4, 5], name: 'ratings', validate: true, ...options}
     let levels = config.levels
@@ -51,7 +42,7 @@ function ratings(schema, options) {
 
     let doValidate = {
         validator: isValid,
-        message: "Invalid ratings level"
+        message: "Invalid rating"
     };
 
     let noValidate = {
@@ -59,6 +50,19 @@ function ratings(schema, options) {
     };
 
     let validate = config.validate ? config.validator || doValidate : noValidate;
+
+    function setter(ratings){
+        if(isPlainObject(ratings)) {
+            return ratings
+        }
+
+        if(typeof ratings === "number" && this instanceof mongoose.Document){
+            let obj = this.get(name, null, {getters: false})
+            obj[ratings] += 1
+            this.markModified(name)
+            return obj
+        }
+    }
 
     const ratingsSchema = new mongoose.Schema({
         [name]: {
@@ -71,12 +75,6 @@ function ratings(schema, options) {
         }
     }, { toObject: { getters: true, }, toJSON: { getters: true } });
 
-    ratingsSchema.pre('save', function (next) {
-        if (name in this.modifiedPaths) {
-            this.markModified(name);
-        }
-        next();
-    });
     schema.add(ratingsSchema);
 }
 

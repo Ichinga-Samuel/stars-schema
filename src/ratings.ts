@@ -50,7 +50,7 @@ export function ratings(schema: Schema, options: Config){
 
     let doValidate = {
         validator: isValid,
-        message: "Invalid ratings level"
+        message: "Invalid rating"
     }
     let noValidate = {
         validator: function (ratings: stars){return true}
@@ -58,19 +58,24 @@ export function ratings(schema: Schema, options: Config){
 
     let validate = config.validate ? config.validator || doValidate : noValidate
 
+    function setter (this: Document | Query<any, any>, ratings: stars|number){
+        if (isPlainObject(ratings)){return ratings}
+
+        if(typeof ratings === "number" && this instanceof Document){
+            let obj: stars = this.get(name, null, {getters: false})
+            obj[ratings] += 1
+            this.markModified(name)
+            return obj
+        }
+    }
+
     const ratingsSchema = new Schema(
         {
             [name]: {
                 type: Schema.Types.Mixed,
                 ...ratings,
                 get: config.getter || weightedAverage,
-                set: config.setter || function(this: Document | Query<any, any>, ratings: stars|number){
-                        if (isPlainObject(ratings)){return ratings}
-                        if(typeof ratings === "number" && this instanceof Document){
-                            this.get(name, null, {getters: false})[ratings] = 1 + parseInt(this.get(name, null, {getters: false})[ratings])
-                            return this.get(name, null, {getters: false})
-                        }
-                        },
+                set: config.setter || setter,
                 default: default_,
                 validate: validate
             }

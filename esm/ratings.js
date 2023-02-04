@@ -5,7 +5,7 @@ import _ from "mongoose";
 const {Schema, Document} = _
 
 
-function isPlainObject(o) {
+function isPlainObject(o){
     return Object(o) === o && Object.getPrototypeOf(o) === Object.prototype;
 }
 
@@ -18,16 +18,6 @@ function weightedAverage(ratings) {
         sum += value * parseFloat(key);
     }
     return sum / total;
-}
-
-
-function setter(ratings){
-    if(isPlainObject(ratings)) return ratings
-
-    if(typeof ratings === "number" && this instanceof Document){
-        this.get(name, null, {getters: false})[ratings] = 1 + parseInt(this.get(name, null, {getters: false})[ratings])
-        return this.get(name, null, {getters: false})
-    }
 }
 
 
@@ -53,9 +43,23 @@ export function ratings(schema, options) {
         }
     }
 
+    function setter(ratings){
+
+        if(isPlainObject(ratings)) {
+            return ratings
+        }
+
+        if(typeof ratings === "number" && this instanceof Document){
+            let obj = this.get(name, null, {getters: false})
+            obj[ratings] += 1
+            this.markModified(name)
+            return obj
+        }
+    }
+
     let doValidate = {
         validator: isValid,
-        message: "Invalid ratings level"
+        message: "Invalid rating"
     };
 
     let noValidate = {
@@ -73,13 +77,6 @@ export function ratings(schema, options) {
             default: default_,
             validate: validate
         }
-    }, { toObject: { getters: true, }, toJSON: { getters: true } });
-
-    ratingsSchema.pre('save', function (next) {
-        if (name in this.modifiedPaths) {
-            this.markModified(name);
-        }
-        next();
-    });
+    }, { toObject: { getters: true}, toJSON: { getters: true } });
     schema.add(ratingsSchema);
 }
